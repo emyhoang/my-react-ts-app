@@ -1,10 +1,11 @@
 import * as React from 'react';
+import './confirm.css';
 
 interface IProps {
   title: string;
   content: string;
   cancelCaption?: string;
-  okCaption: string;
+  okCaption?: string;
 }
 
 class Confirm extends React.Component<IProps> {
@@ -13,7 +14,22 @@ class Confirm extends React.Component<IProps> {
     okCaption: 'Okay'
   };
   public render() {
-    return <Confirm title='React and Typescript' content='Are you sure you want to...' />;
+    return (
+      <div className='confirm-wrapper confirm-visible'>
+        <div className='confirm-container'>
+          <div className='confirm-title-container'>
+            <span>{this.props.title}</span>
+          </div>
+          <div className='confirm-content-container'>
+            <p>{this.props.content}</p>
+          </div>
+          <div className='confirm-buttons-container'>
+            <button className='confirm-cancel'>{this.props.cancelCaption}</button>
+            <button className='confirm-ok'>{this.props.okCaption}</button>
+          </div>
+        </div>
+      </div>
+    );
   }
 }
 
