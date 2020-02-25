@@ -1,6 +1,7 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
+import Confirm from './confirm';
 
 function App() {
   return (
@@ -14,6 +15,12 @@ function App() {
           Learn React
         </a>
       </header>
+      <Confirm
+        title='React and TypeScript'
+        content='Are you sure you want to learn React and Typescript?'
+        cancelCaption='No way'
+        okCaption='Yes please!'
+      />
     </div>
   );
 }
