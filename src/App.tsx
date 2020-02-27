@@ -6,14 +6,19 @@ import Confirm from './confirm';
 interface IState {
   confirmOpen: boolean;
   confirmMessage: string;
+  confirmVisible: boolean;
+  countDown: number;
 }
 
 class App extends React.Component<{}, IState> {
+  private timer: number = 0;
   constructor(props: {}) {
     super(props);
     this.state = {
       confirmMessage: 'Please hit the confirm button',
-      confirmOpen: true
+      confirmOpen: false,
+      confirmVisible: true,
+      countDown: 10
     };
   }
 
@@ -22,6 +27,7 @@ class App extends React.Component<{}, IState> {
       confirmMessage: "Take a break, I'm sure you will later...",
       confirmOpen: false
     });
+    clearInterval(this.timer);
   };
 
   private handleOkConfirmClick = () => {
@@ -29,11 +35,35 @@ class App extends React.Component<{}, IState> {
       confirmMessage: 'Cool, carry on reading!',
       confirmOpen: false
     });
+    clearInterval(this.timer);
   };
 
   private handleConfirmClick = () => {
     this.setState({ confirmOpen: true });
+    clearInterval(this.timer);
   };
+
+  public componentDidMount() {
+    this.timer = window.setInterval(() => this.handleTimerTick(), 1000);
+  }
+
+  private handleTimerTick() {
+    this.setState(
+      {
+        confirmMessage: `Please hit the confirm button ${this.state.countDown} secs to go`,
+        countDown: this.state.countDown - 1
+      },
+      () => {
+        if (this.state.countDown <= 0) {
+          clearInterval(this.timer);
+          this.setState({
+            confirmMessage: 'Too late to confirm!',
+            confirmVisible: false
+          });
+        }
+      }
+    );
+  }
 
   render() {
     return (
@@ -48,7 +78,7 @@ class App extends React.Component<{}, IState> {
           </a>
         </header>
         <p>{this.state.confirmMessage}</p>
-        <button onClick={this.handleConfirmClick}>Confirm</button>
+        {this.state.confirmVisible && <button onClick={this.handleConfirmClick}>Confirm</button>}
         <Confirm
           open={this.state.confirmOpen}
           title='React and TypeScript'
