@@ -5,22 +5,34 @@ import Confirm from './confirm';
 
 interface IState {
   confirmOpen: boolean;
+  confirmMessage: string;
 }
 
 class App extends React.Component<{}, IState> {
   constructor(props: {}) {
     super(props);
     this.state = {
+      confirmMessage: 'Please hit the confirm button',
       confirmOpen: true
     };
   }
 
   private handleCancelConfirmClick = () => {
-    this.setState({ confirmOpen: true });
+    this.setState({
+      confirmMessage: "Take a break, I'm sure you will later...",
+      confirmOpen: false
+    });
   };
 
   private handleOkConfirmClick = () => {
-    this.setState({ confirmOpen: false });
+    this.setState({
+      confirmMessage: 'Cool, carry on reading!',
+      confirmOpen: false
+    });
+  };
+
+  private handleConfirmClick = () => {
+    this.setState({ confirmOpen: true });
   };
 
   render() {
@@ -35,6 +47,8 @@ class App extends React.Component<{}, IState> {
             Learn React
           </a>
         </header>
+        <p>{this.state.confirmMessage}</p>
+        <button onClick={this.handleConfirmClick}>Confirm</button>
         <Confirm
           open={this.state.confirmOpen}
           title='React and TypeScript'
