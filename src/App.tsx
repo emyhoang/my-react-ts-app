@@ -11,7 +11,14 @@ interface IState {
 }
 
 class App extends React.Component<{}, IState> {
+  public static getDerivedStateFromProps(props: {}, state: IState) {
+    console.log('getDerivedFromStateProps', props, state);
+    return null;
+  }
+
   private timer: number = 0;
+  private renderCount = 0;
+
   constructor(props: {}) {
     super(props);
     this.state = {
@@ -47,6 +54,10 @@ class App extends React.Component<{}, IState> {
     this.timer = window.setInterval(() => this.handleTimerTick(), 1000);
   }
 
+  public componentWillUnmount() {
+    clearInterval(this.timer);
+  }
+
   private handleTimerTick() {
     this.setState(
       {
@@ -63,6 +74,16 @@ class App extends React.Component<{}, IState> {
         }
       }
     );
+  }
+
+  public getSnapshotBeforeUpdate(prevProps: {}, prevState: IState) {
+    this.renderCount += 1;
+    console.log('getSnapShotBeforeUpdate', prevProps, prevState, { renderCount: this.renderCount });
+    return this.renderCount;
+  }
+
+  public componentDidUpdate(prevProps: {}, prevState: IState, snapshot: number) {
+    console.log('componentDidUpdate', prevProps, prevState, snapshot, { renderCount: this.renderCount });
   }
 
   render() {
