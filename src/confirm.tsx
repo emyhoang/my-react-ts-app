@@ -12,12 +12,19 @@ interface IProps {
 }
 
 const Confirm: React.SFC<IProps> = props => {
+  const [cancelClickCount, setCancelClickCount] = React.useState(0);
+
   const handleOkClick = () => {
     props.onOkClick();
   };
 
   const handleCancelClick = () => {
-    props.onCancelClick();
+    // props.onCancelClick();
+    const newCount = cancelClickCount + 1;
+    setCancelClickCount(newCount);
+    if (newCount >= 2) {
+      props.onCancelClick();
+    }
   };
   return (
     <div className={props.open ? 'confirm-wrapper confirm-visible' : 'confirm-wrapper'}>
@@ -30,7 +37,7 @@ const Confirm: React.SFC<IProps> = props => {
         </div>
         <div className='confirm-buttons-container'>
           <button className='confirm-cancel' onClick={handleCancelClick}>
-            {props.cancelCaption}
+            {cancelClickCount === 0 ? props.cancelCaption : 'Really'}
           </button>
           <button className='confirm-ok' onClick={handleOkClick}>
             {props.okCaption}
