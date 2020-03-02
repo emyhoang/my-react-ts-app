@@ -100,15 +100,17 @@ class App extends React.Component<{}, IState> {
         </header>
         <p>{this.state.confirmMessage}</p>
         {this.state.confirmVisible && <button onClick={this.handleConfirmClick}>Confirm</button>}
-        <Confirm
-          open={this.state.confirmOpen}
-          title='React and TypeScript'
-          content='Are you sure you want to learn React and Typescript?'
-          cancelCaption='No way'
-          okCaption='Yes please!'
-          onCancelClick={this.handleCancelConfirmClick}
-          onOkClick={this.handleOkConfirmClick}
-        />
+        {this.state.countDown > 0 && (
+          <Confirm
+            open={this.state.confirmOpen}
+            title='React and TypeScript'
+            content='Are you sure you want to learn React and Typescript?'
+            cancelCaption='No way'
+            okCaption='Yes please!'
+            onCancelClick={this.handleCancelConfirmClick}
+            onOkClick={this.handleOkConfirmClick}
+          />
+        )}
       </div>
     );
   }

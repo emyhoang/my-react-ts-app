@@ -14,6 +14,13 @@ interface IProps {
 const Confirm: React.SFC<IProps> = props => {
   const [cancelClickCount, setCancelClickCount] = React.useState(0);
 
+  React.useEffect(() => {
+    console.log('Confirm first rendering');
+    return () => {
+      console.log('Confirm Unmounted');
+    };
+  }, []);
+
   const handleOkClick = () => {
     props.onOkClick();
   };
