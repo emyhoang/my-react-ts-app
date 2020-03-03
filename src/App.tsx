@@ -1,7 +1,7 @@
 import React from 'react';
 import logo from './logo.svg';
 import './App.css';
-import Confirm from './confirm';
+import ConfirmMemo from './confirm';
 
 interface IState {
   confirmOpen: boolean;
@@ -101,7 +101,7 @@ class App extends React.Component<{}, IState> {
         <p>{this.state.confirmMessage}</p>
         {this.state.confirmVisible && <button onClick={this.handleConfirmClick}>Confirm</button>}
         {this.state.countDown > 0 && (
-          <Confirm
+          <ConfirmMemo
             open={this.state.confirmOpen}
             title='React and TypeScript'
             content='Are you sure you want to learn React and Typescript?'
