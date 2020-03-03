@@ -12,6 +12,8 @@ interface IProps {
 }
 
 const Confirm: React.SFC<IProps> = props => {
+  console.log('Confirm Rendering');
+
   const [cancelClickCount, setCancelClickCount] = React.useState(0);
 
   React.useEffect(() => {
@@ -60,4 +62,6 @@ Confirm.defaultProps = {
   okCaption: 'Okay'
 };
 
-export default Confirm;
+const ConfirmMemo = React.memo(Confirm);
+
+export default ConfirmMemo;
